@@ -15,7 +15,6 @@ class _ContactListScreenState extends State<ContactListScreen> {
   final TextEditingController _numberTEController = TextEditingController();
   List<Model> contactList = [];
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,28 +31,15 @@ class _ContactListScreenState extends State<ContactListScreen> {
           child: Column(
             children: [
               Form(
-                key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      validator: (String? value){
-                        if(value == null || value.trim().isEmpty){
-                          return 'Name is required!';
-                        }
-                        return null;
-                      },
+                    TextField(
                       controller: _nameTEController,
                       decoration: const InputDecoration(hintText: 'Name'),
                       keyboardType: TextInputType.text,
                     ),
                     const SizedBox(height: 8),
-                    TextFormField(
-                      validator: (String? value){
-                        if(value == null || value.trim().isEmpty){
-                          return 'Number is required!';
-                        }
-                        return null;
-                      },
+                    TextField(
                       controller: _numberTEController,
                       decoration: const InputDecoration(hintText: 'Number'),
                       keyboardType: TextInputType.number,
@@ -61,7 +47,12 @@ class _ContactListScreenState extends State<ContactListScreen> {
                     const SizedBox(height: 8),
                     ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
+                        final name = _nameTEController.text.trim();
+                        final number = _numberTEController.text.trim();
+                        if (name.isEmpty || number.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('field required!')));
+                        } else {
                           _addContact();
                         }
                       },
