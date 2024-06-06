@@ -30,41 +30,36 @@ class _ContactListScreenState extends State<ContactListScreen> {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              Form(
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _nameTEController,
-                      decoration: const InputDecoration(hintText: 'Name'),
-                      keyboardType: TextInputType.text,
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: _numberTEController,
-                      decoration: const InputDecoration(hintText: 'Number'),
-                      keyboardType: TextInputType.number,
-                    ),
-                    const SizedBox(height: 8),
-                    ElevatedButton(
-                      onPressed: () {
-                        final name = _nameTEController.text.trim();
-                        final number = _numberTEController.text.trim();
-                        if (name.isEmpty || number.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('field required!')));
-                        } else {
-                          _addContact();
-                        }
-                      },
-                      child: const Text(
-                        'Add',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
+              TextField(
+                controller: _nameTEController,
+                decoration: const InputDecoration(hintText: 'Name'),
+                keyboardType: TextInputType.text,
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _numberTEController,
+                decoration: const InputDecoration(hintText: 'Number'),
+                keyboardType: TextInputType.number,
+                maxLength: 11,
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  final name = _nameTEController.text.trim();
+                  final number = _numberTEController.text.trim();
+                  if (name.isEmpty || number.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('field required!')));
+                  } else {
+                    _addContact();
+                  }
+                },
+                child: const Text(
+                  'Add',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
